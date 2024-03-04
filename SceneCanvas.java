@@ -6,17 +6,21 @@ public class SceneCanvas extends JComponent{
 
     private int width;
     private int height;
-    private BackgroundDay daybg;
-    private Pentagon p;
+    BackgroundNight nightbg;
+    BackgroundDay daybg;
+    //private boolean bark;
+    
     private Tree t;
+    DogBase db;
 
     public SceneCanvas(int w, int h){
         width = w;
         height = h;
         this.setPreferredSize(new Dimension(width, height));
         daybg = new BackgroundDay(0, 0, width, height);
-        p = new Pentagon(100, 200, Color.WHITE);
-        t = new Tree(600, 600, 6, Color.GREEN, 300, 50, new Color(108, 60, 31));
+        db = new DogBase(300, 400);
+        nightbg = new BackgroundNight(0, 0, w, h);
+    
     }
     
     @Override
@@ -28,14 +32,23 @@ public class SceneCanvas extends JComponent{
             RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHints(rh);
-    
         daybg.draw(g2d);
-        p.draw(g2d);
-        t.draw(g2d);
-       
+        if(daybg.forDay.day){
+            daybg.draw(g2d);
+        }
+        else if(nightbg.forNight.night){
+            nightbg.draw(g2d);
+        }
+        //db.draw(g2d);
+        if(db.forBark.barked){
+            db.drawBark(g2d);
+        }
+        else db.draw(g2d);
 
+        
 
-
-
+        
     }
+
+    
 }
